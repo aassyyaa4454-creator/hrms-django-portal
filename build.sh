@@ -2,19 +2,19 @@
 # exit on error
 set -o errexit
 
-# تنصيب المكتبات
+# 1. تنصيب المكتبات
 pip install -r requirements.txt
 
-# تنصيب متصفح بلاي رايت (ضروري لأن مشروعك يستدعي المكتبة في views.py)
-python -m playwright install --with-deps chromium
+# 2. تنصيب متصفح بلاي رايت (بدون --with-deps لتجنب طلب صلاحيات السوبر يوزر)
+python -m playwright install chromium
 
-# تجميع الملفات الثابتة
+# 3. تجميع الملفات الثابتة
 python manage.py collectstatic --no-input
 
-# عمل الهجرة لقاعدة البيانات
+# 4. عمل الهجرة لقاعدة البيانات
 python manage.py migrate
 
-# إنشاء السوبر يوزر تلقائياً من المتغيرات التي وضعناها في ريندر
+# 5. إنشاء السوبر يوزر تلقائياً
 if [ "$CREATE_SUPERUSER" ]; then
   python manage.py shell << END
 from django.contrib.auth import get_user_model
