@@ -88,6 +88,7 @@ STATICFILES_DIRS = [BASE_DIR / 'hr_app' / 'static']
 # الإعدادات الجديدة الضرورية لرفع الملفات الثابتة على الانترنت
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+WHITENOISE_MANIFEST_STRICT = False
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 
