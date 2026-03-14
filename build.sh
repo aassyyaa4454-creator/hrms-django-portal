@@ -5,13 +5,16 @@ set -o errexit
 # تنصيب المكتبات
 pip install -r requirements.txt
 
-# تجميع ملفات التنسيق CSS/JS
+# تنصيب متصفح بلاي رايت (ضروري لأن مشروعك يستدعي المكتبة في views.py)
+python -m playwright install --with-deps chromium
+
+# تجميع الملفات الثابتة
 python manage.py collectstatic --no-input
 
-# بناء جداول قاعدة البيانات
+# عمل الهجرة لقاعدة البيانات
 python manage.py migrate
 
-# إنشاء السوبر يوزر تلقائياً (بناءً على معلومات سنضعها في ريندر بعد قليل)
+# إنشاء السوبر يوزر تلقائياً من المتغيرات التي وضعناها في ريندر
 if [ "$CREATE_SUPERUSER" ]; then
   python manage.py shell << END
 from django.contrib.auth import get_user_model
