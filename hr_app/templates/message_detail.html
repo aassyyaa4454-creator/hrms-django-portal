@@ -1,0 +1,18 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}رسالة{% endblock %}
+
+{% block dashboard_content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">{{ message.subject|default:'(بدون موضوع)' }}</h5>
+        <div class="muted-small">من: {{ message.sender.username }} — {{ message.created_at|date:'d/m/Y H:i' }}</div>
+    </div>
+    <div class="card-body">
+        <div class="mb-3">{{ message.body|linebreaks }}</div>
+        <div class="d-flex gap-2">
+            <a href="{% url 'reply_message' message.id %}" class="btn btn-primary">رد</a>
+            <a href="{% url 'hr_inbox' %}" class="btn btn-primary">العودة</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

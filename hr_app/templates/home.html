@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}الرئيسية{% endblock %}
+
+{% block content %}
+
+<!-- 1. Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8" data-aos="fade-up">
+                <h1 class="display-4 fw-bold">نظام HR المتكامل لإدارة فريقك بكفاءة</h1>
+                <p class="lead">
+                    من إدارة بيانات الموظفين والحضور إلى معالجة الرواتب والإجازات، نوفر لك الأدوات التي تحتاجها للتركيز على ما هو أهم: موظفوك.
+                </p>
+                <div class="d-flex justify-content-center gap-2">
+                    <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">ابدأ الآن</a>
+                    <a href="{% url 'login' %}" class="btn btn-light btn-lg">تسجيل الدخول</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 2. Features Section -->
+<section class="features-section" id="features">
+    <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>كل ما تحتاجه في مكان واحد</h2>
+            <p class="text-muted">ميزات قوية مصممة لتبسيط عمليات الموارد البشرية لديك.</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-people-fill"></i></div>
+                    <h5>إدارة الموظفين</h5>
+                    <p class="text-muted small">مركزية بيانات الموظفين، مستنداتهم، وسجلاتهم في ملفات شخصية سهلة الوصول والتحديث.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-clock-history"></i></div>
+                    <h5>الحضور والانصراف</h5>
+                    <p class="text-muted small">تتبع دقيق لساعات العمل، تسجيل الحضور آلياً، وتقارير مفصلة لمتابعة التزام الفريق.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-cash-stack"></i></div>
+                    <h5>الرواتب والإجازات</h5>
+                    <p class="text-muted small">إدارة متكاملة لكشوف الرواتب، العلاوات، وطلبات الإجازة مع دورة موافقات سلسة وشفافة.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3. Testimonial Section -->
+<section class="testimonial-section">
+    <div class="container" data-aos="fade-up">
+        <div class="testimonial-card">
+            <img src="../static/images/continuous-learning.PNG
+" alt="Manager Photo" class="shadow-sm">
+            <blockquote class="my-3">
+                "لقد غيّر هذا النظام طريقة عملنا بالكامل. أصبحنا نقضي وقتًا أقل في الأعمال الورقية والمزيد من الوقت في تطوير فريقنا. إنه بسيط، قوي، وفعال."
+            </blockquote>
+            <h6 class="mb-0">علي المصري</h6>
+            <p class="text-muted small">مدير الموارد البشرية</p>
+        </div>
+    </div>
+</section>
+
+<!-- 4. Footer -->
+<footer class="site-footer">
+    <p class="mb-0">&copy; 2025 نظام HR. جميع الحقوق محفوظة.</p>
+</footer>
+
+{% endblock %}

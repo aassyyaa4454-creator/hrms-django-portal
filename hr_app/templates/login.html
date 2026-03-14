@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% block title %}تسجيل الدخول{% endblock %}
+{% load static %} 
+
+{% block content %}
+<!-- إضافة خط "Tajawal" أو "Cairo" ليبدو التصميم عربياً وعصرياً -->
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Tajawal', sans-serif;
+        background-color: #ffffff;
+        overflow-x: hidden;
+    }
+
+    .login-container {
+        min-height: 100vh;
+        width: 100%;
+    }
+
+    /* تنسيق القسم الأيمن (النموذج) */
+    .form-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 40px 80px; /* مساحات داخلية واسعة */
+        background-color: #fff;
+    }
+
+    /* تنسيق القسم الأيسر (الصورة) */.image-section {
+    /* رابط مباشر لصورة (فريق عمل / موارد بشرية) */
+    background-image: url('../static/images/Generated Image January 06, 2026 - 9_15PM.PNG');
+    
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    min-height: 100vh;
+}
+    /* تخصيص الحقول لتشبه الصورة */
+    .form-control {
+        border-radius: 10px;
+        padding: 12px 15px;
+        border: 1px solid #e1e1e1;
+        background-color: #fff;
+        font-size: 0.95rem;
+    }
+    
+    .form-control:focus {
+        border-color: #3f5e33;
+        box-shadow: 0 0 0 0.2rem rgba(63, 94, 51, 0.25);
+    }
+
+    .form-label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        color: #1a1a1a;
+    }
+
+    /* الزر الأخضر */
+    .btn-custom-green {
+        background-color: #355e25ff; /* لون أخضر زيتوني مشابه للصورة */
+        border-color: #3f5e33;
+        color: white;
+        border-radius: 10px;
+        padding: 12px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-custom-green:hover {
+        background-color: #2f4626;
+        border-color: #2f4626;
+    }
+
+    /* رابط نسيت كلمة المرور */
+    .forgot-pass {
+        color: #1a1a1a;
+        font-size: 0.85rem;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    /* فاصل "أو" */
+    .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 30px 0;
+        color: #aaa;
+    }
+    .divider::before, .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #eee;
+    }
+    .divider:not(:empty)::before { margin-left: .25em; }
+    .divider:not(:empty)::after { margin-right: .25em; }
+
+    /* أزرار التواصل الاجتماعي (شكلية فقط للمطابقة) */
+    .btn-social {
+        border: 1px solid #e1e1e1;
+        background: #fff;
+        color: #333;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: 0.2s;
+    }
+    .btn-social:hover {
+        background-color: #f8f9fa;
+    }
+    
+    /* للتجاوب مع الشاشات الصغيرة */
+    @media (max-width: 768px) {
+        .image-section { display: none; } /* إخفاء الصورة في الجوال */
+        .form-section { padding: 30px 20px; }
+    }
+</style>
+
+<div class="container-fluid p-0 login-container" dir="rtl">
+    <div class="row g-0 h-100">
+        
+        <!-- القسم الأيمن: نموذج تسجيل الدخول -->
+        <div class="col-lg-6 col-md-12 form-section">
+            <div style="max-width: 450px; margin: 0 auto; width: 100%;">
+                
+                <!-- العنوان -->
+                <div class="mb-5">
+                    <h2 class="fw-bold mb-2">مرحباً بعودتك!</h2>
+                    <p class="text-muted">الرجاء إدخال بياناتك للدخول إلى حسابك.</p>
+                </div>
+
+                <!-- رسائل الخطأ -->
+                {% if error %}
+                    <div class="alert alert-danger rounded-3">{{ error }}</div>
+                {% endif %}
+
+                <!-- النموذج -->
+                <form method="post" autocomplete="off">
+                    {% csrf_token %}
+                    
+                    <!-- حقل اسم المستخدم -->
+                    <div class="mb-4">
+                        <label for="username" class="form-label">اسم المستخدم</label>
+                        <input type="text" name="username" id="username" class="form-control" placeholder="أدخل اسم المستخدم" required autofocus>
+                    </div>
+
+                    <!-- حقل كلمة المرور -->
+                    <div class="mb-2">
+                        <div class="d-flex justify-content-between">
+                            <label for="password" class="form-label">كلمة المرور</label>
+                            <!-- رابط نسيان كلمة المرور (شكلي) -->
+                            <a href="#" class="forgot-pass text-primary small">نسيت كلمة المرور؟</a>
+                        </div>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="أدخل كلمة المرور" required>
+                    </div>
+
+                    <!-- خيار تذكرني (شكلي للمطابقة مع الصورة) -->
+                    <div class="mb-4 mt-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                        <label class="form-check-label small text-muted" for="rememberMe">تذكرني لمدة 30 يوماً</label>
+                    </div>
+
+                    <!-- زر الدخول -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-custom-green btn-lg">تسجيل الدخول</button>
+                    </div>
+                </form>
+
+                <!-- فاصل "أو" -->
+                <div class="divider small">أو</div>
+
+                <!-- أزرار تسجيل الدخول الاجتماعي (شكلية) -->
+                <div class="row g-2">
+                    <div class="col-6">
+                        <a href="#" class="btn btn-social w-100 text-decoration-none">
+                            <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="Google">
+                            <span>جوجل</span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="#" class="btn btn-social w-100 text-decoration-none">
+                            <img src="https://www.svgrepo.com/show/511330/apple-173.svg" width="20" alt="Apple">
+                            <span>آبل</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- إنشاء حساب جديد -->
+                <div class="text-center mt-4 small">
+                    <span class="text-muted">ليس لديك حساب؟</span>
+                    <a href="#" class="text-primary text-decoration-none fw-bold">إنشاء حساب</a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- القسم الأيسر: الصورة -->
+        <div class="col-lg-6 d-none d-lg-block image-section">
+            <!-- الصورة خلفية عبر CSS -->
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}تفاصيل الموظف{% endblock %}
+{% block dashboard_content %}
+<!-- 1. Profile Summary Header -->
+<div class="card profile-summary-card mb-4" data-aos="fade-in">
+<!-- Avatar -->
+{% if profile.photo %}
+<img src="{{ profile.photo.url }}" alt="Profile Photo" class="rounded-circle profile-summary-avatar">
+{% else %}
+<div class="rounded-circle d-flex justify-content-center align-items-center text-white profile-summary-avatar" style="font-size: 2.5rem; background-color: var(--bamboo-green);">
+{{ profile.user.username|first|upper }}
+</div>
+{% endif %}
+
+<!-- Info -->
+<div class="profile-summary-info">
+    <h3>{{ profile.user.get_full_name|default:profile.user.username }}</h3>
+    <p class="text-muted mb-0">{{ profile.user_type }} {% if profile.department %}في قسم {{ profile.department }}{% endif %}</p>
+</div>
+
+<!-- Back Button -->
+<a href="{% url 'manage_employees' %}" class="btn btn-secondary"><i class="bi bi-arrow-left me-2"></i>العودة للقائمة</a>
+</div>
+<div class="row g-4">
+<!-- Left Column: Personal, Financial & Performance Data -->
+<div class="col-lg-5">
+
+<!-- Personal Details Card -->
+    <div class="card" data-aos="fade-up">
+        <div class="card-header"><h5 class="mb-0">البيانات الشخصية</h5></div>
+        <div class="card-body">
+            <ul class="detail-list">
+                <li>
+                    <i class="bi bi-envelope detail-icon"></i>
+                    <span class="detail-label">البريد الإلكتروني</span>
+                    <span class="detail-value">{{ profile.user.email|default:'-' }}</span>
+                </li>
+                <li>
+                    <i class="bi bi-telephone detail-icon"></i>
+                    <span class="detail-label">رقم الهاتف</span>
+                    <span class="detail-value">{{ profile.phone|default:'-' }}</span>
+                </li>
+                <li>
+                    <i class="bi bi-mortarboard detail-icon"></i>
+                    <span class="detail-label">المؤهل</span>
+                    <span class="detail-value">{{ profile.qualification|default:'-' }}</span>
+                </li>
+                <li>
+                    <i class="bi bi-geo-alt detail-icon"></i>
+                    <span class="detail-label">العنوان</span>
+                    <span class="detail-value">{{ profile.address|default:'-' }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Financial & Performance Highlights -->
+    <div class="row g-4">
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="stat-highlight">
+                <div class="stat-title">صافي الراتب الحالي</div>
+                {% if payroll %}
+                    <div class="stat-value">{{ payroll.net_salary }}</div>
+                {% else %}
+                    <p class="text-muted small mt-2">لم يحدد بعد</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="stat-highlight">
+                <div class="stat-title">آخر تقييم</div>
+                 {% if evaluation %}
+                    <div class="stat-value">{{ evaluation.score }} / 5</div>
+                    <p class="text-muted small mb-0">{{ evaluation.month|date:"F Y" }}</p>
+                {% else %}
+                     <p class="text-muted small mt-2">لا توجد تقييمات</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Right Column: Leaves and Attendance Logs -->
+<div class="col-lg-7">
+
+    <!-- Leave Requests History Card -->
+    <div class="card" data-aos="fade-up" data-aos-delay="300">
+        <div class="card-header"><h5 class="mb-0">آخر طلبات الإجازة</h5></div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead><tr><th>النوع</th><th>من</th><th>إلى</th><th class="text-center">الحالة</th></tr></thead>
+                    <tbody>
+                        {% for leave in leaves %}
+                        <tr>
+                            <td>{{ leave.get_leave_type_display }}</td>
+                            <td>{{ leave.start_date|date:"d-m-Y" }}</td>
+                            <td>{{ leave.end_date|date:"d-m-Y" }}</td>
+                            <td class="text-center">
+                                {% if leave.status == 'Approved' %}<span class="badge-status badge-status-approved">{{ leave.get_status_display }}</span>
+                                {% elif leave.status == 'Rejected' %}<span class="badge-status badge-status-rejected">{{ leave.get_status_display }}</span>
+                                {% else %}<span class="badge-status badge-status-pending">{{ leave.get_status_display }}</span>{% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4" class="text-center text-muted p-4">لا توجد سجلات إجازة.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attendance History Card -->
+    <div class="card" data-aos="fade-up" data-aos-delay="400">
+        <div class="card-header"><h5 class="mb-0">آخر سجلات الحضور</h5></div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead><tr><th>التاريخ</th><th>وقت الدخول</th><th>وقت الخروج</th><th>ساعات العمل</th></tr></thead>
+                    <tbody>
+                        {% for att in attendances %}
+                        <tr>
+                            <td>{{ att.date|date:"d-m-Y" }}</td>
+                            <td>{{ att.check_in|time:"H:i"|default:"-" }}</td>
+                            <td>{{ att.check_out|time:"H:i"|default:"-" }}</td>
+                            <td>{{ att.hours_worked|default:"-" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4" class="text-center text-muted p-4">لا توجد سجلات حضور.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock %}

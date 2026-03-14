@@ -1,0 +1,48 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}إضافة تقييم جديد{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-card">
+    <div class="card-header bg-transparent border-0 px-0">
+        <h5 class="mb-0">إضافة تقييم جديد</h5>
+    </div>
+    <div class="card-body p-0 pt-3">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row g-3">
+                
+                <!-- === القائمة المنسدلة الجديدة لاختيار الموظف === -->
+                <div class="col-12">
+                    <label class="form-label">اختر الموظف</label>
+                    <select name="employee" class="form-select" required>
+                        <option value="" disabled selected>-- اختر موظفًا لم تختارة سابقا هذا الشهر لتقييمه --</option>
+                        {% for employee in employees %}
+                            <option value="{{ employee.id }}">{{ employee.user.get_full_name|default:employee.user.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">الشهر والسنة</label>
+                    <input type="month" name="month" class="form-control" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">التقييم (من 1 إلى 5)</label>
+                    <input type="number" name="score" class="form-control" step="0.1" min="1" max="5" required>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">ملاحظات (اختياري)</label>
+                    <textarea name="remarks" class="form-control" rows="4"></textarea>
+                </div>
+
+                <div class="col-12 mt-3 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">حفظ التقييم</button>
+                    <a href="{% url 'manage_evaluations' %}" class="btn btn-secondary">إلغاء</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

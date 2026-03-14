@@ -1,0 +1,74 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}تسجيل الحضور{% endblock %}
+
+{% block dashboard_content %}
+
+<!-- استخدام كلاس جديد للتمييز وتطبيق التنسيق الصحيح -->
+<div class="dashboard-card attendance-page-card">
+
+    <!-- 1. الساعة الحية والتاريخ (بتصميم جديد) -->
+    <div class="live-clock-wrapper">
+        <div id="live-clock">--:--:--</div>
+        <div class="date-string">{{ "now"|date:"l, d F Y" }}</div>
+    </div>
+
+    <hr style="border-color: rgba(255,255,255,0.1);">
+
+    <!-- 2. حالة الحضور والأزرار -->
+    <div class="mt-4">
+        {% if not attendance.check_in %}
+            <!-- الحالة: لم يسجل دخول بعد -->
+            <div class="attendance-status">
+                <p>جاهز لبدء يوم عملك؟</p>
+            </div>
+            <div class="attendance-actions">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="check_in">
+                    <button type="submit" class="btn btn-check-in btn-lg">
+                        <i class="bi bi-play-circle-fill me-2"></i>بدء العمل (تسجيل دخول)
+                    </button>
+                </form>
+            </div>
+
+        {% elif not attendance.check_out %}
+            <!-- الحالة: قام بتسجيل الدخول -->
+            <div class="attendance-status">
+                <p>
+                    <span class="time-label">تم تسجيل الدخول في:</span>
+                    <strong class="time-value ms-2">{{ attendance.check_in|time:"H:i:s" }}</strong>
+                </p>
+            </div>
+            <div class="attendance-actions">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="check_out">
+                    <button type="submit" class="btn btn-check-out btn-lg">
+                        <i class="bi bi-stop-circle-fill me-2"></i>إنهاء العمل (تسجيل خروج)
+                    </button>
+                </form>
+            </div>
+
+        {% else %}
+            <!-- الحالة: أكمل يوم العمل -->
+            <div class="work-summary">
+                <h4 class="mb-3">لقد أكملت يوم عملك بنجاح!</h4>
+                <p>
+                    <span class="time-label">وقت الدخول:</span>
+                    <strong class="time-value ms-2">{{ attendance.check_in|time:"H:i:s" }}</strong>
+                </p>
+                <p>
+                    <span class="time-label">وقت الخروج:</span>
+                    <strong class="time-value ms-2">{{ attendance.check_out|time:"H:i:s" }}</strong>
+                </p>
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 1.5rem 0;">
+                <h5 class="mb-0">
+                    إجمالي ساعات العمل: 
+                    <strong style="color: var(--accent-peach); font-size: 1.5rem;">{{ attendance.hours_worked|default:'--' }} ساعة</strong>
+                </h5>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

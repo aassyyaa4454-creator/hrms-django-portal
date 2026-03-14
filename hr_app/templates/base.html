@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}نظام إدارة الموظفين{% endblock %}</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- NEW: AOS Library for Scroll Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/bamboo_theme.css' %}">
+</head>
+<body>
+
+<!-- ... (بقية محتوى Navbar كما هو) ... -->
+<nav class="navbar navbar-expand-lg site-navbar sticky-top py-2">
+    <div class="container">
+        <a class="navbar-brand text-dark fw-bold" href="{% url 'home' %}">
+            <i class="bi bi-gear-wide-connected me-2" style="color: var(--bamboo-green);"></i>نظام HR
+        </a>
+
+        <div class="ms-auto d-flex align-items-center">
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-sm me-2">لوحة التحكم</a>
+                <div class="dropdown">
+                    <a class="btn btn-primary btn-sm dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person me-1"></i> {{ user.username }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{% url 'profile' %}">الملف الشخصي</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">تسجيل خروج</a></li>
+                    </ul>
+                </div>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary">تسجيل دخول</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<main> <!-- Remove container and py-4 from here -->
+    {% block content %}{% endblock %}
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- NEW: AOS Script and Initialization -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800, // Animation duration
+    once: true,    // Animate only once
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}إدارة التقييمات{% endblock %}
+
+{% block dashboard_content %}
+
+<!-- === تم تغيير الهيكل بالكامل هنا === -->
+
+<div class="dashboard-card">
+    <!-- 1. رأس البطاقة: يحتوي على العنوان والزر الجديد -->
+    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center px-0 pb-3 mb-3 border-bottom border-secondary border-opacity-25">
+        <h5 class="mb-0">
+            <i class="bi bi-person-check-fill me-2" style="color: var(--accent-peach);"></i>
+            سجلات تقييم الموظفين
+        </h5>
+        
+        <!-- 2. الزر الجديد: ينقلك إلى صفحة الموظفين لاختيار من تقيمه -->
+        <a href="{% url 'add_evaluation' %}" class="btn btn-primary">
+    <i class="bi bi-plus-lg me-1"></i>
+    إضافة تقييم جديد
+</a>
+    </div>
+
+    <!-- 3. جسم البطاقة: يحتوي على الجدول المنسق -->
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>الموظف</th>
+                        <th>الشهر المقيّم</th>
+                        <th>الدرجة</th>
+                        <th>ملاحظات المدير</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for eval in evaluations %}
+                    <tr>
+                        <td>{{ eval.employee.user.get_full_name|default:eval.employee.user.username }}</td>
+                        <td>{{ eval.month|date:"F Y" }}</td>
+                        <!-- تحسين عرض الدرجة باستخدام Badge -->
+                        <td><span class="badge bg-primary rounded-pill fs-6">{{ eval.score }} / 5</span></td>
+                        <td>{{ eval.remarks|default:'-' }}</td>
+                    </tr>
+                    {% empty %}
+                    <!-- تحسين عرض الرسالة عند عدم وجود بيانات -->
+                    <tr>
+                        <td colspan="4" class="text-center p-5">
+                            <i class="bi bi-journal-x fs-1 text-muted"></i>
+                            <p class="mt-2 text-muted mb-0">لا توجد تقييمات مسجلة حالياً.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

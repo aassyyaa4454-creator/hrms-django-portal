@@ -1,0 +1,201 @@
+:root{
+            /* New theme variables inspired by attachment */
+            --bg-1: #0f1724; /* deep navy */
+            --bg-2: #1b2330; /* soft charcoal */
+            --panel: rgba(255,255,255,0.03);
+            --muted: rgba(230,238,248,0.55);
+            --accent-peach: #e7b79a; /* button accent */
+            --accent-dark: #c78f6f;
+            --card-glass: rgba(255,255,255,0.02);
+        }
+        body {
+            background: radial-gradient(1200px 600px at 10% 10%, rgba(255,255,255,0.02), transparent), linear-gradient(180deg, var(--bg-1), var(--bg-2));
+            color: #e6eef8;
+            font-family: 'Cairo', sans-serif;
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+        }
+        /* Form controls: translucent, subtle inner shadow like the design */
+        .form-control, .form-select, textarea, input[type="text"], input[type="email"], input[type="password"] {
+            background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(0,0,0,0.06));
+            color: #e6eef8;
+            border: 1px solid rgba(255,255,255,0.03);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+            border-radius: 6px;
+            backdrop-filter: blur(2px);
+        }
+        .form-control::placeholder { color: var(--muted); }
+    .nav-link, .dropdown-item { color: rgba(255,255,255,0.85); }
+    .dropdown-item:hover { color: #fff; background-color: rgba(255,255,255,0.03); }
+        .site-navbar { background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); backdrop-filter: blur(6px); }
+    .card, .sidebar { background: var(--card-glass); border: 1px solid rgba(255,255,255,0.03); }
+        .btn-primary, .btn-custom { background-color: var(--accent-peach); border-color: var(--accent-dark); color: #111827; }
+        .btn-primary:hover { background-color: var(--accent-dark); color: #fff; }
+        .text-muted { color: var(--muted) !important; }
+        .container-main { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+
+/* Card visual to mimic centered panel feel */
+.card {
+    border-radius: 12px;
+    padding: 22px;
+}
+
+/* Form action buttons consistent style */
+.btn-primary { padding: 10px 18px; border-radius: 8px; font-weight:600; }
+
+/* Headings like in the mock */
+h1,h2,h3 { letter-spacing: 1px; }
+
+/* subtle divider line used in forms */
+.form-divider { height:1px; background: rgba(255,255,255,0.03); margin:18px 0; }
+
+/* Global layout container for centered content */
+.container-main { max-width:1200px; margin:auto; }
+
+/* Tables: modern zebra, clear headings */
+table.table {
+    width:100%;
+    border-collapse:collapse;
+    background: transparent;
+}
+table.table thead th {
+    background: rgba(255,255,255,0.02);
+    color: #f1f5f9;
+    font-weight:600;
+    padding:12px 10px;
+    border-bottom:1px solid rgba(255,255,255,0.03);
+}
+table.table tbody td {
+    padding:12px 10px;
+    border-bottom:1px solid rgba(255,255,255,0.02);
+}
+table.table tbody tr:nth-child(odd) { background: rgba(255,255,255,0.01); }
+
+/* Clear readable labels */
+label.form-label { color: #dbeafe; font-weight:600; }
+
+/* Buttons: smooth transitions and subtle elevation */
+.btn { transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease; }
+.btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(2,6,23,0.45); }
+.btn:active { transform: translateY(-1px); }
+
+/* Professional 'check' indicator on click: overlay using pseudo-element */
+.btn-checked {
+    position:relative;
+    overflow:visible;
+}
+.btn-checked::after {
+    content: '\2713'; /* checkmark */
+    position:absolute;
+    inset:auto 10px 10px auto;
+    right:10px; bottom:10px;
+    background: rgba(0,0,0,0.15);
+    color: #fff;
+    padding:6px 8px;
+    border-radius:8px;
+    font-weight:700;
+    opacity:0;
+    transform: translateY(6px) scale(.9);
+    transition: all .18s ease;
+}
+.btn-checked.show-checked::after { opacity:1; transform: translateY(0) scale(1); }
+
+/* Improve card headers and spacing */
+.card .card-header { background: transparent; border-bottom:1px solid rgba(255,255,255,0.03); padding:12px 18px; font-weight:700; }
+.card-body { padding:18px; }
+
+/* Inputs focus state */
+.form-control:focus { box-shadow: 0 6px 20px rgba(199,143,111,0.12); border-color: var(--accent-dark); outline: none; }
+
+/* Small utilities */
+.muted-small { color: var(--muted); font-size:0.9rem; }
+
+/* Responsive tweaks */
+@media (max-width: 992px) {
+    .container-main { padding: 1rem; }
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.btn {
+    border-radius: 5px;
+}
+
+table th, table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* --- Login page styles (inspired by attachment) --- */
+.login-hero {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:70vh;
+}
+.login-card {
+    width:900px;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow: 0 20px 50px rgba(15,23,42,0.6);
+    display:flex;
+}
+.login-left {
+    flex:1.1;
+    background: linear-gradient(135deg,#6b2a5b 0%, #b34848 60%);
+    position:relative;
+    padding:48px;
+    color: rgba(255,255,255,0.92);
+}
+.login-left .planet {
+    width:160px;
+    height:160px;
+    border-radius:50%;
+    background: radial-gradient(circle at 40% 30%, rgba(255,200,160,0.9), rgba(230,100,80,0.95));
+    box-shadow: inset -20px -12px 40px rgba(0,0,0,0.2), 0 15px 40px rgba(0,0,0,0.35);
+    margin-bottom:26px;
+}
+.login-left .brand {
+    letter-spacing:8px;
+    font-weight:600;
+    margin-top:18px;
+    opacity:0.95;
+}
+.login-right {
+    flex:1;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    padding:42px 36px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+.login-right h3 { margin-bottom:1.25rem; }
+.login-input {
+    border: none;
+    border-bottom:1px solid rgba(200,215,230,0.08);
+    background: transparent;
+    color: #e6eef8;
+    border-radius:0;
+    padding-left:0.5rem;
+}
+.login-input::placeholder { color: rgba(230,238,248,0.55); }
+.btn-login-row { display:flex; gap:12px; margin-top:12px; }
+.btn-outline-alt { border:1px solid rgba(255,255,255,0.12); background:transparent; color:#e6eef8; }
+
+/* small screens: stack */
+@media (max-width: 768px) {
+    .login-card { flex-direction:column; width:90%; }
+    .login-left { padding:28px; }
+    .login-right { padding:24px; }
+}

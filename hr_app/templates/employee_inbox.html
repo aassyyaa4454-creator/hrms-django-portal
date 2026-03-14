@@ -1,0 +1,31 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}صندوق الرسائل{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-card p-0">
+    <div class="card-header bg-transparent d-flex justify-content-between align-items-center p-4 border-bottom border-secondary border-opacity-25">
+        <h5 class="mb-0">صندوق الرسائل</h5>
+        <a href="{% url 'contact_hr' %}" class="btn btn-primary"><i class="bi bi-pencil-square me-2"></i>رسالة جديدة</a>
+    </div>
+    <div class="item-list">
+        {% for m in messages %}
+            <a href="{% url 'employee_view_message' m.id %}" class="{% if not m.is_read %}item-unread{% endif %}">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="fw-bold fs-5 mb-1">{{ m.subject|default:'(بدون موضوع)' }}</div>
+                        <div class="mb-0">من: {{ m.sender.get_full_name|default:m.sender.username }} — {{ m.created_at|date:'d/m/Y H:i' }}</div>
+                    </div>
+                    {% if not m.is_read %}
+                        <span class="badge rounded-pill mt-1" style="background-color: var(--accent-peach); color: #111;">جديد</span>
+                    {% endif %}
+                </div>
+            </a>
+        {% empty %}
+            <div class="p-5 text-center text-muted">
+                <i class="bi bi-envelope-open fs-1"></i>
+                <p class="mt-2 mb-0">صندوق الرسائل فارغ حالياً.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

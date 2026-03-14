@@ -1,0 +1,48 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}تحديث الملف الشخصي{% endblock %}
+
+{% block dashboard_content %}
+<div class="card p-3">
+    <h2 class="mb-3">تحديث الملف الشخصي</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row g-3">
+            <div class="col-md-4 text-center">
+                {% if user.profile.photo %}
+                    <img src="{{ user.profile.photo.url }}" class="rounded-circle mb-2" width="140" height="140">
+                {% else %}
+                    <div class="rounded-circle bg-secondary mb-2" style="width:140px;height:140px;"></div>
+                {% endif %}
+                <div class="small text-muted">صورة شخصية (اختياري)</div>
+                <input type="file" name="photo" class="form-control mt-2">
+            </div>
+            <div class="col-md-8">
+                <div class="mb-2">
+                    <label class="form-label">اسم المستخدم</label>
+                    <input type="text" class="form-control" value="{{ user.username }}" readonly>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">البريد الإلكتروني</label>
+                    <input type="email" class="form-control" value="{{ user.email }}" readonly>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">رقم الهاتف</label>
+                    <input type="text" name="phone" value="{{ user.profile.phone }}" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">المؤهل</label>
+                    <input type="text" name="qualification" value="{{ user.profile.qualification }}" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">العنوان</label>
+                    <textarea name="address" class="form-control">{{ user.profile.address }}</textarea>
+                </div>
+                <div class="d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-outline-light">إلغاء</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

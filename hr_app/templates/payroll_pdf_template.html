@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>كشف الرواتب</title>
+    <style>
+        @font-face {
+            font-family: 'Cairo';
+            /* === السطر الذي تم تصحيحه === */
+            src: url("{% static 'fonts/Cairo-Regular.ttf' %}");
+        }
+
+        /* --- تنسيقات عامة للصفحة --- */
+        body {
+            font-family: "Cairo", sans-serif;
+            font-size: 10pt;
+            color: #333;
+        }
+        
+        /* --- تنسيق رأس التقرير --- */
+        .report-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .report-header h1 {
+            margin: 0;
+            color: #0d6efd;
+        }
+        .report-header p {
+            margin: 5px 0 0;
+            font-size: 11pt;
+            color: #555;
+        }
+
+        /* --- تنسيق الجدول --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: right;
+            vertical-align: middle;
+        }
+        thead {
+            background-color: #f2f2f2;
+        }
+        thead th {
+            font-weight: bold;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        td strong {
+            color: #0d6efd;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-header">
+        <h1>كشف رواتب الموظفين</h1>
+        <p>تاريخ التصدير: {{ export_date }}</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>الموظف</th>
+                <th>الراتب الأساسي</th>
+                <th>العلاوات</th>
+                <th>الخصومات</th>
+                <th>الراتب الصافي</th>
+                <th>ملاحظات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pay in payrolls %}
+            <tr>
+                <td>{{ pay.employee.user.get_full_name|default:pay.employee.user.username }}</td>
+                <td>{{ pay.base_salary }}</td>
+                <td>{{ pay.bonuses }}</td>
+                <td>{{ pay.deductions }}</td>
+                <td><strong>{{ pay.net_salary }}</strong></td>
+                <td>{{ pay.remarks|default:'-' }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 20px;">لا توجد بيانات رواتب مسجلة لعرضها.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

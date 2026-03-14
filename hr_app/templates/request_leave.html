@@ -1,0 +1,42 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}طلب إجازة{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-card" style="max-width: 800px; margin: auto;">
+    <div class="card-header bg-transparent px-0 pb-3 border-bottom border-secondary border-opacity-25">
+        <h5 class="mb-0">طلب إجازة جديدة</h5>
+    </div>
+    <div class="card-body p-0 pt-4">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">نوع الإجازة</label>
+                <select name="leave_type" class="form-select" required>
+                    <option value="" disabled selected>-- اختر نوع الإجازة --</option>
+                    <option value="Annual">سنوية</option>
+                    <option value="Sick">مرضية</option>
+                    <option value="Emergency">طارئة</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">تاريخ البداية</label>
+                    <input type="date" name="start_date" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">تاريخ النهاية</label>
+                    <input type="date" name="end_date" class="form-control" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">سبب الإجازة</label>
+                <textarea name="reason" class="form-control" rows="5" required placeholder="يرجى توضيح سبب طلب الإجازة..."></textarea>
+            </div>
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn btn-primary px-4">إرسال الطلب</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary px-4">إلغاء</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

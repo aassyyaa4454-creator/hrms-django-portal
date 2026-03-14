@@ -1,0 +1,20 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}لوحة الموظف{% endblock %}
+{% block dashboard_content %}
+<h2 class="mb-4">مرحباً بك، {{ user.get_full_name|default:user.username }}</h2>
+<div class="row g-4">
+    <div class="col-md-6"><div class="card h-100 text-center"><div class="card-body"><h5 class="card-title">الحضور اليومي</h5><p class="text-muted">لتسجيل وقت حضورك وانصرافك اليومي.</p><a href="{% url 'attendance' %}" class="btn btn-primary mt-3">الانتقال لصفحة الحضور</a></div></div></div>
+    <div class="col-md-6"><div class="card h-100 text-center"><div class="card-body"><h5 class="card-title">طلب إجازة</h5><p class="text-muted">لتقديم طلب إجازة جديد ومتابعة حالة الطلبات.</p><a href="{% url 'request_leave' %}" class="btn btn-primary mt-3">تقديم طلب جديد</a></div></div></div>
+</div>
+<div class="row g-4 mt-2">
+    <div class="col-lg-4 col-md-6">
+        <div class="card"><div class="card-header"><h5>الراتب الحالي</h5></div><div class="card-body">{% if payroll %}<p class="d-flex justify-content-between"><span>الأساسي:</span> <strong>{{ payroll.base_salary }}</strong></p><p class="d-flex justify-content-between"><span>الصافي:</span> <strong style="color: var(--bamboo-green);">{{ payroll.net_salary }}</strong></p>{% else %}<p class="text-muted text-center my-3">لم يتم تحديد راتب بعد.</p>{% endif %}</div></div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="card"><div class="card-header"><h5>آخر تقييم</h5></div><div class="card-body">{% if performance %}<p class="mb-2"><strong>تقييم شهر {{ performance.month|date:"F Y" }}</strong></p><h3 class="text-center my-2" style="color: var(--bamboo-green);">{{ performance.score }} / 5</h3>{% else %}<p class="text-muted text-center my-3">لا توجد تقييمات مسجلة.</p>{% endif %}</div></div>
+    </div>
+    <div class="col-lg-4 col-md-12">
+        <div class="card"><div class="card-header"><h5>آخر الإشعارات</h5></div><div class="card-body">{% if notifications %}{% for note in notifications|slice:":2" %}<div class="mb-2 pb-2 border-bottom"><p class="mb-1 {% if not note.is_read %}fw-bold{% endif %}">{{ note.message }}</p><small class="text-muted">{{ note.created_at|date:"d/m/Y H:i" }}</small></div>{% endfor %}<a href="{% url 'notifications' %}" class="btn btn-sm btn-secondary mt-2">عرض الكل</a>{% else %}<p class="text-muted text-center my-3">لا توجد إشعارات جديدة.</p>{% endif %}</div></div>
+    </div>
+</div>
+{% endblock %}

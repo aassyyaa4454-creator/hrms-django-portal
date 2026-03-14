@@ -1,0 +1,29 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}صندوق رسائل الموارد البشرية{% endblock %}
+
+{% block dashboard_content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">صندوق الرسائل</h5>
+    </div>
+    <div class="card-body">
+        {% if messages %}
+        <ul class="list-group">
+            {% for m in messages %}
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="fw-semibold">{{ m.subject|default:'(بدون موضوع)' }}</div>
+                    <div class="small text-muted">من: {{ m.sender.username }} — {{ m.created_at|date:'d/m/Y H:i' }}</div>
+                </div>
+                <div>
+                    <a href="{% url 'view_message' m.id %}" class="btn btn-sm btn-primary">عرض</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-muted">لا توجد رسائل حالياً.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,401 @@
+/*
+====================================
+  BambooHR Precise Theme Simulation
+  - V2 with Enhanced UX & Animations -
+====================================
+*/
+
+/* 1. Import Font & Define Global Variables */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+    --bamboo-green: #27883b;
+    --bamboo-green-hover: #1e6b2e;
+    --bamboo-background: #f7f8fa;
+    --bamboo-surface: #ffffff;
+    --bamboo-text: #333333;
+    --bamboo-text-muted: #667085;
+    --bamboo-border: #e4e7eb;
+    --bamboo-primary-blue: #0d6efd;
+    --status-approved: #27883b;
+    --status-rejected: #d32f2f;
+    --status-pending: #ffab00;
+    --font-family-arabic: 'Cairo', sans-serif;
+    --font-family-latin: 'Poppins', sans-serif;
+    --border-radius: 6px;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 2. General Body & Typography Styles */
+body {
+    background-color: var(--bamboo-background);
+    color: var(--bamboo-text);
+    font-family: var(--font-family-arabic), var(--font-family-latin);
+    -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, h6 { font-weight: 600; }
+a { color: var(--bamboo-primary-blue); text-decoration: none; transition: color 0.2s; }
+a:hover { color: #0b5ed7; }
+
+/* 3. Main Navbar */
+.site-navbar { background-color: var(--bamboo-surface); border-bottom: 1px solid var(--bamboo-border); box-shadow: var(--shadow-sm); }
+.navbar-brand, .nav-link, .dropdown-item { color: var(--bamboo-text) !important; font-weight: 500; }
+
+/* 4. Buttons (With enhanced effects) */
+.btn {
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out; /* Smoother transition */
+    border: 1px solid transparent;
+}
+.btn:hover {
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: var(--shadow-md); /* Enhanced shadow on hover */
+}
+.btn-primary {
+    background: linear-gradient(180deg, var(--bamboo-green), #237a35); /* Subtle gradient */
+    border-color: var(--bamboo-green);
+    color: #fff;
+}
+.btn-primary:hover { background: var(--bamboo-green-hover); border-color: var(--bamboo-green-hover); color: #fff; }
+.btn-secondary { background-color: var(--bamboo-surface); border-color: var(--bamboo-border); color: var(--bamboo-text); }
+.btn-secondary:hover { background-color: #f1f3f5; border-color: #ced4da; }
+
+/* 5. Cards (With hover effects) */
+.card {
+    background-color: var(--bamboo-surface);
+    border: 1px solid var(--bamboo-border);
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease; /* Transition for hover */
+}
+.card:hover {
+    border-color: #d0d5dc;
+    box-shadow: var(--shadow-md); /* Add shadow on hover */
+}
+.card-header { background-color: var(--bamboo-surface); border-bottom: 1px solid var(--bamboo-border); font-size: 1.1rem; font-weight: 600; padding: 1rem 1.25rem; }
+.card-body { padding: 1.25rem; }
+
+/* 6. Forms */
+.form-control, .form-select { background-color: var(--bamboo-surface); border: 1px solid #ced4da; color: var(--bamboo-text); border-radius: var(--border-radius); padding: 0.5rem 0.9rem; transition: border-color .15s, box-shadow .15s; }
+.form-control:focus, .form-select:focus { border-color: var(--bamboo-green); box-shadow: 0 0 0 3px rgba(39, 136, 59, 0.15); }
+.form-label { font-weight: 500; margin-bottom: 0.5rem; font-size: 0.9rem; }
+
+/* 7. Tables (With enhanced hover and borders) */
+.table { border-color: var(--bamboo-border); }
+.table thead th { font-weight: 600; color: var(--bamboo-text-muted); background-color: #f9fafb; border-bottom: 1px solid var(--bamboo-border); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; padding: 0.75rem 1rem; }
+.table tbody td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--bamboo-border); transition: background-color 0.2s; }
+.table tbody tr { border-left: 3px solid transparent; transition: border-left 0.3s ease; } /* For hover effect */
+.table tbody tr:last-child td { border-bottom: none; }
+.table-hover > tbody > tr:hover {
+    background-color: #f9fafb;
+    border-left: 3px solid var(--bamboo-green); /* Highlight row on hover */
+}
+
+/* 8. Dashboard Sidebar */
+.sidebar-nav .nav-link { color: var(--bamboo-text-muted); padding: 0.6rem 1rem; border-radius: var(--border-radius); margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.75rem; font-weight: 500; transition: all 0.2s ease; }
+.sidebar-nav .nav-link:hover { background-color: #eef8f0; color: var(--bamboo-green); transform: translateX(3px); /* Pop out effect */ }
+.sidebar-nav .nav-link.active { background-color: var(--bamboo-green); color: #fff; font-weight: 600; }
+
+/* 9. Login Page (No changes needed) */
+.login-container { padding-top: 4rem; padding-bottom: 4rem; }
+.login-card { max-width: 420px; margin: auto; padding: 2.5rem; }
+.login-header .brand-icon { width: 50px; height: 50px; background-color: var(--bamboo-green); color: #fff; border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 1rem; }
+
+/* 10. Dashboard Stat Cards (No changes needed) */
+.stat-card .icon-wrapper { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+.stat-card.employees .icon-wrapper { background-color: #e7f3ff; color: #0d6efd; }
+.stat-card.attendance .icon-wrapper { background-color: #eef8f0; color: var(--bamboo-green); }
+.stat-card.leaves .icon-wrapper { background-color: #fff8e1; color: #ffab00; }
+.stat-card.performance .icon-wrapper { background-color: #fbebee; color: #d32f2f; }
+.stat-card h4 { font-size: 1.5rem; }
+.stat-card p { font-size: 0.9rem; }
+
+/*
+   NEW ADDITIONS FOR UX ENHANCEMENTS
+*/
+
+/* 11. Custom Status Badges */
+.badge-status {
+    padding: 0.3em 0.75em;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 50rem; /* Pill shape */
+}
+.badge-status-approved { color: var(--status-approved); background-color: rgba(39, 136, 59, 0.1); }
+.badge-status-rejected { color: var(--status-rejected); background-color: rgba(211, 47, 47, 0.1); }
+.badge-status-pending { color: var(--status-pending); background-color: rgba(255, 171, 0, 0.1); }
+
+/* 12. Page Load Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animated-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+
+
+
+
+
+
+/*
+====================================
+  - V2.1 Profile Page Enhancements -
+====================================
+*/
+
+/* 13. Profile Header */
+.profile-header-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+.profile-header-card .btn {
+    margin-right: auto; /* Pushes the button to the left in RTL */
+}
+
+/* 14. Custom Tab Styling */
+.nav-tabs-bordered {
+    border-bottom: 2px solid #ebeef2;
+}
+.nav-tabs-bordered .nav-link {
+    margin-bottom: -2px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--bamboo-text-muted);
+    font-weight: 600;
+}
+.nav-tabs-bordered .nav-link:hover,
+.nav-tabs-bordered .nav-link:focus {
+    color: var(--bamboo-green);
+}
+.nav-tabs-bordered .nav-link.active {
+    background-color: transparent;
+    color: var(--bamboo-green);
+    border-bottom-color: var(--bamboo-green);
+}
+
+/* 15. Profile Info List */
+.profile-info-list .list-group-item {
+    border: none;
+    padding: 0.8rem 0;
+}
+.profile-info-list .info-label {
+    color: var(--bamboo-text-muted);
+    display: flex;
+    align-items: center;
+}
+.profile-info-list .info-value {
+    font-weight: 500;
+}
+
+
+
+
+
+/*
+====================================
+  - V2.2 Homepage Enhancements -
+====================================
+*/
+
+/* 16. Homepage Hero Section */
+.hero-section {
+    position: relative;
+    padding: 8rem 0;
+background-image: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)), url('../images/ali.png');    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+}
+.hero-section h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.hero-section .lead {
+    font-size: 1.25rem;
+    max-width: 600px;
+    margin: 1.5rem auto 2.5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+.hero-section .btn {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+}
+
+/* 17. Features Section */
+.features-section {
+    padding: 5rem 0;
+}
+.section-title {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+.section-title h2 {
+    font-size: 2.5rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+.section-title h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--bamboo-green);
+}
+
+.feature-card {
+    background-color: var(--bamboo-surface);
+    border: 1px solid var(--bamboo-border);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-md);
+}
+.feature-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    background-color: #eef8f0;
+    color: var(--bamboo-green);
+}
+
+/* 18. Testimonial Section */
+.testimonial-section {
+    padding: 5rem 0;
+    background-color: #eef8f0;
+}
+.testimonial-card {
+    background-color: var(--bamboo-surface);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    text-align: center;
+    max-width: 700px;
+    margin: auto;
+}
+.testimonial-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+.testimonial-card blockquote {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--bamboo-text);
+    border: none;
+    padding: 0;
+    margin: 0 0 1rem;
+}
+
+/* 19. Footer */
+.site-footer {
+    padding: 2rem 0;
+    background-color: #212529;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+}
+
+
+
+
+
+
+
+/*
+====================================
+  - V2.3 Employee Details Page Overhaul -
+====================================
+*/
+
+/* 20. Employee Details Header */
+.profile-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+}
+.profile-summary-avatar {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+}
+.profile-summary-info h3 {
+    margin-bottom: 0.25rem;
+}
+.profile-summary-card .btn {
+    margin-right: auto; /* RTL support */
+}
+
+/* 21. Details List with Icons */
+.detail-list {
+    list-style: none;
+    padding: 0;
+}
+.detail-list li {
+    display: flex;
+    align-items: flex-start;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--bamboo-border);
+}
+.detail-list li:last-child {
+    border-bottom: none;
+}
+.detail-list .detail-icon {
+    font-size: 1.1rem;
+    margin-left: 1rem; /* RTL support */
+    color: var(--bamboo-text-muted);
+    width: 20px;
+    text-align: center;
+}
+.detail-list .detail-label {
+    color: var(--bamboo-text-muted);
+    width: 120px;
+}
+.detail-list .detail-value {
+    font-weight: 500;
+}
+
+/* 22. Stat Highlight Cards */
+.stat-highlight {
+    background-color: #f9fafb;
+    border: 1px solid var(--bamboo-border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    height: 100%;
+}
+.stat-highlight .stat-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--bamboo-text-muted);
+    margin-bottom: 0.5rem;
+}
+.stat-highlight .stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--bamboo-green);
+}

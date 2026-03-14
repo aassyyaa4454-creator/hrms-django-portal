@@ -1,0 +1,26 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}الإشعارات{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-card p-0">
+    <div class="card-header bg-transparent p-4 border-bottom border-secondary border-opacity-25">
+        <h5 class="mb-0">الإشعارات</h5>
+    </div>
+    <ul class="item-list">
+        {% for note in notifications %}
+        <li class="d-flex align-items-start gap-3 {% if not note.is_read %}item-unread{% endif %}">
+            <i class="bi bi-bell-fill mt-1 fs-4" style="color: var(--accent-peach);"></i>
+            <div>
+                <p class="mb-1 fs-5">{{ note.message }}</p>
+                <small class="mb-0">{{ note.created_at|date:"d/m/Y H:i" }}</small>
+            </div>
+        </li>
+        {% empty %}
+        <li class="p-5 text-center text-muted">
+            <i class="bi bi-bell-slash fs-1"></i>
+            <p class="mt-2 mb-0">لا توجد إشعارات جديدة.</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

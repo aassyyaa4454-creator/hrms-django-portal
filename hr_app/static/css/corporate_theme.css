@@ -1,0 +1,221 @@
+/*
+====================================
+  التصميم الشركاتي الحديث - Modern Corporate Theme
+====================================
+*/
+
+/* 1. استيراد الخط وتحديد المتغيرات */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&display=swap');
+
+:root {
+    --color-primary: #0d6efd; /* أزرق شركاتي */
+    --color-primary-hover: #0b5ed7;
+    --color-background: #f8f9fa; /* خلفية رمادية فاتحة جداً */
+    --color-surface: #ffffff; /* لون الأسطح والبطاقات (أبيض) */
+    --color-text: #212529; /* لون النص الأساسي (أسود ناعم) */
+    --color-text-muted: #6c757d; /* لون النص الثانوي */
+    --color-border: #dee2e6;
+    --color-success: #198754;
+    --color-danger: #dc3545;
+    --font-family-base: 'Cairo', sans-serif;
+    --border-radius: 0.375rem; /* 6px */
+    --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+/* 2. التنسيقات العامة */
+body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-family-base);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+a:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+}
+
+/* 3. تصميم البطاقات (Cards) */
+.card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid var(--color-border);
+    font-weight: 500;
+    padding: 1rem 1.25rem;
+}
+
+/* 4. تصميم الأزرار */
+.btn {
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid transparent;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+    color: #fff;
+}
+
+.btn-secondary, .btn-outline-light {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #fff;
+}
+.btn-secondary:hover, .btn-outline-light:hover {
+    background-color: #5c636a;
+    border-color: #565e64;
+    color: #fff;
+}
+
+/* 5. تصميم النماذج (Forms) */
+.form-control, .form-select {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-control:focus, .form-select:focus {
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+}
+
+/* 6. تصميم الجداول */
+.table {
+    border-color: var(--color-border);
+    background-color: var(--color-surface);
+}
+
+.table th {
+    font-weight: 700;
+    color: var(--color-text);
+    background-color: #f8f9fa;
+    border-bottom-width: 2px;
+}
+
+.table-hover > tbody > tr:hover > * {
+    background-color: #f1f3f5;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    background-color: rgba(0,0,0,0.02);
+}
+
+td, th {
+    vertical-align: middle;
+}
+
+/* 7. الشريط الجانبي (Sidebar) */
+.sidebar {
+    background-color: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    height: 100vh;
+}
+
+.sidebar .nav-link {
+    color: #343a40;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #e9ecef;
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.sidebar .nav-link.active { /* For active link - you can add this class via JS or Django context */
+    background-color: var(--color-primary);
+    color: #fff;
+    font-weight: 500;
+}
+
+.sidebar .nav-link .bi {
+    font-size: 1.1rem;
+}
+
+/* 8. صفحة تسجيل الدخول */
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+.login-card {
+    max-width: 450px;
+    width: 100%;
+    padding: 2.5rem;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header .brand {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+/* 9. تحسينات إضافية */
+.muted-small {
+    color: var(--color-text-muted);
+    font-size: 0.9em;
+}
+
+.list-group-item {
+    border-color: var(--color-border);
+}
+
+.list-group-item-info {
+    background-color: #e7f1ff;
+}

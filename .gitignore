@@ -1,0 +1,14 @@
+*.pyc
+__pycache__/
+db.sqlite3
+*.sql
+media/
+.env
+venv/
+env/
+.venv/
+Lib/
+Include/
+Scripts/
+*.mp4
+*.mov

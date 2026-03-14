@@ -1,0 +1,42 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}إضافة موظف{% endblock %}
+
+{% block dashboard_content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">إضافة موظف جديد</h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row gy-3">
+                <div class="col-md-4">
+                    <label class="form-label">اسم المستخدم</label>
+                    <input name="username" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">البريد الإلكتروني</label>
+                    <input name="email" type="email" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">كلمة المرور</label>
+                    <input name="password" type="password" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">نوع المستخدم</label>
+                    <select name="user_type" class="form-control">
+                        <option value="Employee">Employee</option>
+                        <option value="HR Manager">HR Manager</option>
+                        <option value="Finance">Finance</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary">إضافة</button>
+                    <a href="{% url 'manage_employees' %}" class="btn btn-secondary">إلغاء</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

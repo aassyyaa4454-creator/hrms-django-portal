@@ -1,0 +1,41 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}تعديل موظف{% endblock %}
+
+{% block dashboard_content %}
+<h2 class="mb-4">تعديل بيانات الموظف</h2>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">الاسم الأول</label>
+                    <input name="first_name" value="{{ profile.user.first_name }}" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">اسم العائلة</label>
+                    <input name="last_name" value="{{ profile.user.last_name }}" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">البريد الإلكتروني</label>
+                    <input name="email" value="{{ profile.user.email }}" type="email" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">الهاتف</label>
+                    <input name="phone" value="{{ profile.phone }}" class="form-control">
+                </div>
+                <div class="col-12">
+                    <label class="form-label">العنوان</label>
+                    <textarea name="address" class="form-control" rows="3">{{ profile.address }}</textarea>
+                </div>
+                <div class="col-12 mt-4 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    <a href="{% url 'manage_employees' %}" class="btn btn-secondary">إلغاء</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

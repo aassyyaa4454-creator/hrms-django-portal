@@ -1,0 +1,38 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}إدارة الإجازات{% endblock %}
+{% block dashboard_content %}
+<div class="card">
+    <div class="card-header"><h5 class="mb-0">طلبات الإجازة</h5></div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>الموظف</th><th>النوع</th><th>من</th><th>إلى</th><th>الحالة</th><th class="text-center">العمليات</th></tr></thead>
+                <tbody>
+                    {% for leave in leaves %}
+                    <tr>
+                        <td>{{ leave.employee.user.get_full_name|default:leave.employee.user.username }}</td>
+                        <td>{{ leave.get_leave_type_display }}</td>
+                        <td>{{ leave.start_date }}</td>
+                        <td>{{ leave.end_date }}</td>
+                        <td>
+                            <!-- NEW Custom Badges -->
+                            {% if leave.status == 'Approved' %}<span class="badge-status badge-status-approved">{{ leave.get_status_display }}</span>
+                            {% elif leave.status == 'Rejected' %}<span class="badge-status badge-status-rejected">{{ leave.get_status_display }}</span>
+                            {% else %}<span class="badge-status badge-status-pending">{{ leave.get_status_display }}</span>{% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if leave.status == 'Pending' %}
+                                <a href="{% url 'approve_leave' leave.id %}" class="btn btn-sm btn-outline-success">قبول</a>
+                                <a href="{% url 'reject_leave' leave.id %}" class="btn btn-sm btn-outline-danger">رفض</a>
+                            {% else %}-{% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6" class="text-center p-5 text-muted">لا توجد طلبات إجازة حالياً.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

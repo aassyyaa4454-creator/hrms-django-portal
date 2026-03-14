@@ -1,0 +1,47 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}إدارة الرواتب{% endblock %}
+{% block dashboard_content %}
+<div class="card">
+<div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+<h5 class="mb-0">كشوف الرواتب</h5>
+<div>
+{% if user.profile.user_type == 'HR Manager' or user.profile.user_type == 'Finance' %}
+<a href="{% url 'add_payroll' %}" class="btn btn-primary me-1"><i class="bi bi-plus-lg me-1"></i> إضافة راتب</a>
+<a href="{% url 'export_payroll_pdf' %}" class="btn btn-danger"><i class="bi bi-file-earmark-pdf me-1"></i> تصدير PDF</a>
+{% endif %}
+</div>
+</div>
+<div class="card-body">
+<div class="table-responsive">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>الموظف</th>
+<th>الراتب الأساسي</th>
+<th>العلاوات</th>
+<th>الخصومات</th>
+<th>الصافي</th>
+<th class="text-center">العمليات</th>
+</tr>
+</thead>
+<tbody>
+{% for pay in payrolls %}
+<tr>
+<td>{{ pay.employee.user.get_full_name|default:pay.employee.user.username }}</td>
+<td>{{ pay.base_salary }}</td>
+<td>{{ pay.bonuses }}</td>
+<td>{{ pay.deductions }}</td>
+<td><strong>{{ pay.net_salary }}</strong></td>
+<td class="text-center">
+<a href="{% url 'edit_payroll' pay.id %}" class="btn btn-sm btn-outline-primary">تعديل</a>
+</td>
+</tr>
+{% empty %}
+<tr><td colspan="6" class="text-center p-4 text-muted">لا توجد رواتب مسجلة بعد.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+{% endblock %}

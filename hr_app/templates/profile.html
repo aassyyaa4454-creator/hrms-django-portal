@@ -1,0 +1,97 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}الملف الشخصي{% endblock %}
+
+{% block dashboard_content %}
+<div class="card">
+    <!-- 1. Profile Header Section -->
+    <div class="card-body border-bottom">
+        <div class="profile-header-card">
+            <!-- Avatar -->
+            {% if profile.photo %}
+                <img src="{{ profile.photo.url }}" alt="Profile Photo" class="rounded-circle profile-avatar">
+            {% else %}
+                <div class="rounded-circle d-flex justify-content-center align-items-center text-white profile-avatar" style="font-size: 2.5rem; background-color: var(--bamboo-green);">
+                    {{ user.username|first|upper }}
+                </div>
+            {% endif %}
+            
+            <!-- User Info -->
+            <div>
+                <h3 class="mb-0">{{ request.user.get_full_name|default:request.user.username }}</h3>
+                <p class="text-muted mb-0">{{ profile.user_type }}</p>
+            </div>
+
+            <!-- Edit Button -->
+            <a href="{% url 'update_profile' %}" class="btn btn-secondary btn-sm"><i class="bi bi-pencil me-1"></i> تعديل البيانات</a>
+        </div>
+    </div>
+
+    <!-- 2. Tab Navigation -->
+    <ul class="nav nav-tabs nav-tabs-bordered px-3" id="profileTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#profile-details" type="button" role="tab" aria-controls="profile-details" aria-selected="true">المعلومات الشخصية</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="payroll-tab" data-bs-toggle="tab" data-bs-target="#payroll-history" type="button" role="tab" aria-controls="payroll-history" aria-selected="false">سجل الرواتب</button>
+        </li>
+    </ul>
+
+    <!-- 3. Tab Content -->
+    <div class="tab-content p-3" id="profileTabContent">
+        
+        <!-- Personal Details Tab Pane -->
+        <div class="tab-pane fade show active" id="profile-details" role="tabpanel" aria-labelledby="details-tab">
+            <h5 class="mb-3">تفاصيل الملف الشخصي</h5>
+            <ul class="list-group list-group-flush profile-info-list">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="info-label"><i class="bi bi-envelope-fill me-2 text-muted"></i> البريد الإلكتروني</span>
+                    <span class="info-value">{{ request.user.email|default:'-' }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="info-label"><i class="bi bi-telephone-fill me-2 text-muted"></i> رقم الهاتف</span>
+                    <span class="info-value">{{ profile.phone|default:'-' }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="info-label"><i class="bi bi-mortarboard-fill me-2 text-muted"></i> المؤهل</span>
+                    <span class="info-value">{{ profile.qualification|default:'-' }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="info-label"><i class="bi bi-geo-alt-fill me-2 text-muted"></i> العنوان</span>
+                    <span class="info-value">{{ profile.address|default:'-' }}</span>
+                </li>
+                 <li class="list-group-item d-flex justify-content-between">
+                    <span class="info-label"><i class="bi bi-briefcase-fill me-2 text-muted"></i> القسم</span>
+                    <span class="info-value">{{ profile.department|default:'-' }}</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Payroll History Tab Pane -->
+        <div class="tab-pane fade" id="payroll-history" role="tabpanel" aria-labelledby="payroll-tab">
+            <h5 class="mb-3">سجل الرواتب</h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr><th>السنة</th><th>الشهر</th><th>الراتب الأساسي</th><th>العلاوات</th><th>الخصومات</th><th>الصافي</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for p in payrolls %}
+                        <tr>
+                            <td>{{ p.year }}</td>
+                            <td>{{ p.month }}</td>
+                            <td>{{ p.base_salary }}</td>
+                            <td>{{ p.bonuses }}</td>
+                            <td>{{ p.deductions }}</td>
+                            <td><strong>{{ p.net_salary }}</strong></td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="6" class="text-center text-muted p-4">لا توجد سجلات رواتب حتى الآن.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

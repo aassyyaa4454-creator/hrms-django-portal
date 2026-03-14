@@ -1,0 +1,69 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}إدارة الموظفين{% endblock %}
+{% block dashboard_content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">قائمة الموظفين</h5>
+        <a href="{% url 'add_employee' %}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i> إضافة موظف</a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>الاسم</th><th>البريد الإلكتروني</th><th>نوع المستخدم</th><th>الهاتف</th><th class="text-center">العمليات</th></tr></thead>
+                <tbody>
+                    {% for emp in employees %}
+                    <tr>
+                        <td><a href="{% url 'employee_details' emp.id %}" class="fw-bold">{{ emp.user.get_full_name|default:emp.user.username }}</a></td>
+                        <td>{{ emp.user.email|default:'-' }}</td>
+                        <td><span class="badge bg-secondary fw-normal">{{ emp.user_type }}</span></td>
+                        <td>{{ emp.phone|default:'-' }}</td>
+                        <td class="text-center">
+                            <!-- NEW: Tooltips added -->
+                            <a href="{% url 'edit_employee' emp.id %}" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="تعديل"><i class="bi bi-pencil"></i></a>
+                            <!-- NEW: Delete button now triggers a modal -->
+                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-delete-url="{% url 'delete_employee' emp.id %}" data-bs-toggle="tooltip" title="حذف">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="text-center p-5 text-muted">لم يتم إضافة أي موظفين بعد.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- NEW: Confirmation Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">تأكيد الحذف</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        هل أنت متأكد من أنك تريد حذف هذا الموظف؟ لا يمكن التراجع عن هذا الإجراء.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+        <a id="deleteConfirmBtn" href="#" class="btn btn-danger">نعم، قم بالحذف</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEW: JavaScript for Modal -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var confirmDeleteModal = document.getElementById('confirmDeleteModal');
+    confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var deleteUrl = button.getAttribute('data-delete-url');
+        var deleteConfirmBtn = document.getElementById('deleteConfirmBtn');
+        deleteConfirmBtn.setAttribute('href', deleteUrl);
+    });
+});
+</script>
+{% endblock %}
